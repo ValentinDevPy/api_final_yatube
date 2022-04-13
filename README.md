@@ -1,10 +1,9 @@
-#  Api_final
+# Api_final
+
 ## Самая актуальная версия API всемирно известного YaTube.
 
-
-YaTube API это RESTful API, позволяющий создавать и редактировать посты, подписываться на тех, кто вам интересен и постить в разные группы, которые подходят вам по тематике.
-В основе проекта лежат Django и Django REST Framework.
-
+YaTube API это RESTful API, позволяющий создавать и редактировать посты, подписываться на тех, кто вам интересен и
+постить в разные группы, которые подходят вам по тематике. В основе проекта лежат Django и Django REST Framework.
 
 ## Особенности
 
@@ -17,14 +16,18 @@ YaTube API это RESTful API, позволяющий создавать и ре
 
 ## Технологии
 
-- [Django](https://github.com/django/django) - фреймворк, который включает в себя все необходимое для быстрой разработки различных веб-сервисовю
-- [Django REST Framework](https://www.django-rest-framework.org/) - фреймворк, расширяющий возможности Django и позволяющий быстро писать RESTful API для Django-проектов.
+- [Django](https://github.com/django/django) - фреймворк, который включает в себя все необходимое для быстрой разработки
+  различных веб-сервисовю
+- [Django REST Framework](https://www.django-rest-framework.org/) - фреймворк, расширяющий возможности Django и
+  позволяющий быстро писать RESTful API для Django-проектов.
 - [djoser](https://github.com/sunscrapers/djoser) - библиотека, облегчающая работу с JWT-токенами.
 
-Конечно же YaTube API это ПО с открытым исходным кодом и [публичным репозиторием](https://github.com/ValentinDevPy/api_final_yatube)
- на GitHub.
+Конечно же YaTube API это ПО с открытым исходным кодом
+и [публичным репозиторием](https://github.com/ValentinDevPy/api_final_yatube)
+на GitHub.
 
 ## Начало работы
+
 ### Как запустить проект:
 
 Клонировать репозиторий и перейти в него в командной строке:
@@ -57,6 +60,12 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Модуль manage.py расположен в:
+
+```
+api_final_yatube/yatube_api/yatube_api
+```
+
 Выполнить миграции:
 
 ```
@@ -68,11 +77,12 @@ python3 manage.py migrate
 ```
 python3 manage.py runserver
 ```
+
 API будет доступен по адресу:
+
 ```
 http://127.0.0.1:8000/api/v1/
 ```
-
 
 ## Примеры работы с API
 
@@ -82,10 +92,42 @@ http://127.0.0.1:8000/api/v1/
 http://127.0.0.1:8000/api/v1/posts/
 ```
 
-Получение конкретного поста, а так же его редактирование и удаление(id - первичный ключ таблицы Posts) происходит на эндпоинте:
+Пример ответа при GET запросе с параметрами offset и count:
+```
+{
+  "count": 123,
+  "next": "http://api.example.org/accounts/?offset=400&limit=100",
+  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+  "results": [
+    {
+      "id": 0,
+      "author": "string",
+      "text": "string",
+      "pub_date": "2021-10-14T20:41:29.648Z",
+      "image": "string",
+      "group": 0
+    }
+  ]
+}
+
+```
+
+Получение конкретного поста, а так же его редактирование и удаление(id - первичный ключ таблицы Posts) происходит на
+эндпоинте:
 
 ```sh
 http://127.0.0.1:8000/api/v1/posts/{id}/
+```
+Пример ответа:
+```
+{
+  "id": 0,
+  "author": "string",
+  "text": "string",
+  "pub_date": "2019-08-24T14:15:22Z",
+  "image": "string",
+  "group": 0
+}
 ```
 
 Получение списка комментариев и создание нового происходит на эндпоинте:
@@ -93,32 +135,96 @@ http://127.0.0.1:8000/api/v1/posts/{id}/
 ```sh
 http://127.0.0.1:8000/api/v1/posts/{post_id}/comments/
 ```
-Получение конкретного комментария, а так же его редактирование и удаление(post_id - первичный ключ таблицы Posts, id - первичный ключ таблицы Comments) происходит на эндпоинте:
+Пример ответа:
+```
+[
+  {
+    "id": 0,
+    "author": "string",
+    "text": "string",
+    "created": "2019-08-24T14:15:22Z",
+    "post": 0
+  }
+]
+```
+
+Получение конкретного комментария, а так же его редактирование и удаление(post_id - первичный ключ таблицы Posts, id -
+первичный ключ таблицы Comments) происходит на эндпоинте:
 
 ```sh
 http://127.0.0.1:8000/api/v1/posts/{post_id}/comments/{id}/
 ```
 
+Пример ответа:
+```
+{
+  "id": 0,
+  "author": "string",
+  "text": "string",
+  "created": "2019-08-24T14:15:22Z",
+  "post": 0
+}
+```
+
 Для групп доступен только метод GET на эндпоинте:
+
 ```sh
 http://127.0.0.1:8000/api/v1/groups/
 ```
+
+Пример ответа:
+```
+[
+  {
+    "id": 0,
+    "title": "string",
+    "slug": "string",
+    "description": "string"
+  }
+]
+```
+
 Для конкретной группы доступен только метод GET(id - первичный ключ таблицы Groups) на эндпоинте:
+
 ```sh
 http://127.0.0.1:8000/api/v1/groups/{id}/
 ```
 
+Пример ответа:
+```
+{
+  "id": 0,
+  "title": "string",
+  "slug": "string",
+  "description": "string"
+}
+```
+
 Следующий эндпоинт возвращает все подписки пользователя, сделавшего запрос. Анонимные запросы запрещены (метод GET):
+
 ```sh
 http://127.0.0.1:8000/api/v1/follow/
 ```
 
-Подписка пользователя от имени которого сделан запрос на пользователя переданного в теле запроса. Анонимные запросы запрещены (метод POST):
+Пример ответа:
+```
+[
+  {
+    "user": "string",
+    "following": "string"
+  }
+]
+```
+
+Подписка пользователя от имени которого сделан запрос на пользователя переданного в теле запроса. Анонимные запросы
+запрещены (метод POST):
+
 ```sh
 http://127.0.0.1:8000/api/v1/follow/
 ```
 
-Создание, обновление и верификация токена происходит на следущих эндпоинтах: 
+Создание, обновление и верификация токена происходит на следущих эндпоинтах:
+
 ```sh
 http://127.0.0.1:8000/api/v1/jwt/create/
 http://127.0.0.1:8000/api/v1/jwt/refresh/
@@ -127,8 +233,6 @@ http://127.0.0.1:8000/api/v1/jwt/verify/
 
 ## Лицензия
 
- **MIT**
+**MIT**
 
 **Free Software, Hell Yeah!**
-## Мой LinkedIn
-[![N|Solid](https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinkedIn_Logo.svg/320px-LinkedIn_Logo.svg.png)](https://www.linkedin.com/in/vborysh/) 
